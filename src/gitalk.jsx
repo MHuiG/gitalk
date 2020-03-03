@@ -178,6 +178,13 @@ class GitalkComponent extends Component {
     return this.getUserInfo().then(() => this.getIssue()).then(issue => this.getComments(issue))
   }
   getUserInfo () {
+	if(this.accessToken==null){
+		return axiosGithub.get().then(
+		  this.setState({ user: null })
+		).catch(err => {
+		  this.logout()
+		})
+	};
     return axiosGithub.get('/user', {
       headers: {
         Authorization: `token ${this.accessToken}`
