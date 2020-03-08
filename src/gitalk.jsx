@@ -178,13 +178,11 @@ class GitalkComponent extends Component {
     return this.getUserInfo().then(() => this.getIssue()).then(issue => this.getComments(issue))
   }
   getUserInfo () {
-	if(this.accessToken==null){
-		return axiosGithub.get().then(
-		  this.setState({ user: null })
-		).catch(err => {
-		  this.logout()
-		})
-	};
+    if (!this.accessToken) {
+      return new Promise(resolve => {
+        resolve()
+      })
+    }
     return axiosGithub.get('/user', {
       headers: {
         Authorization: `token ${this.accessToken}`
@@ -731,10 +729,6 @@ class GitalkComponent extends Component {
               <Action className="gt-action-logout" onClick={this.handleLogout} text={this.i18n.t('logout')}/> :
               <a className="gt-action gt-action-login" onMouseDown={this.handleLogin}>{this.i18n.t('login-with-github')}</a>
             }
-            <div className="gt-copyright">
-              <a className="gt-link gt-link-project" href="https://github.com/gitalk/gitalk" target="_blank">Gitalk</a>
-              <span className="gt-version">{GT_VERSION}</span>
-            </div>
           </div>
         }
         <div className="gt-user">

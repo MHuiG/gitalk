@@ -52,6 +52,12 @@ export const formatErrorMsg = err => {
   } else {
     msg += err.message
   }
+   try{
+	   $("a.btn.comment-button.gitalk").removeClass('active');
+	   $("a.btn.comment-button.valine").addClass('active');
+	   $("div.comment-position.gitalk").removeClass('active');
+	   $("div.comment-position.valine").addClass('active');
+   }catch(err){}
   return msg
 }
 
